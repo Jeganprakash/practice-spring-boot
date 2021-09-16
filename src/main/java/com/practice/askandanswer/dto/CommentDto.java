@@ -1,32 +1,28 @@
 package com.practice.askandanswer.dto;
 
+import com.practice.askandanswer.entity.Comment;
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+
+@Data
 public class CommentDto {
-    private Integer id;
+    private Long id;
+
+    @NotNull
     private String content;
 
-    public Integer getId() {
-        return id;
-    }
+    @NotNull
+    private Long postId;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @NotNull
+    private String username;
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
+    CommentDto(Comment comment){
+        id=comment.getId();
+        content=comment.getContent();
+        postId=comment.getPost().getId();
+        username=comment.getUser().getUsername();
     }
-
-    public String getPostId() {
-        return postId;
-    }
-
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
-
-    private String postId;
 }

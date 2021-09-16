@@ -1,37 +1,27 @@
 package com.practice.askandanswer.dto;
 
+
+import com.practice.askandanswer.entity.Post;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+
+@Data
+@AllArgsConstructor
 public class PostDto{
-    private Integer id;
+
+    private Long id;
+
+    @NotNull
     private String content;
+
+    @NotNull
     private String username;
 
-    public PostDto(Integer id, String content, String username) {
-        this.id = id;
-        this.content = content;
-        this.username = username;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public PostDto(Post post){
+        id=post.getId();
+        content=post.getContent();
+        username=post.getUser().getUsername();
     }
 }

@@ -1,11 +1,23 @@
 package com.practice.askandanswer.entity;
 
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users")
-public class User {
+@Data
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class User implements UserDetails {
+
     @Id
     @Column(name="username")
     private String username;
@@ -16,40 +28,45 @@ public class User {
     @Column(name="enabled")
     private Boolean enabled;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="users_roles",
+                joinColumns =
+                     @JoinColumn(name="users_username"),
+                inverseJoinColumns=
+                     @JoinColumn(name="role_id")
+    )
+    private List<Role> roles;
+
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch =FetchType.LAZY)
     private List<Post> posts;
 
-    public User(){
-    }
-    public User(String username, String password, Boolean enabled) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-    public String getUsername() {
-        return username;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles()
+                .stream()
+                .map(userRole->new SimpleGrantedAuthority(userRole.role))
+                .collect(Collectors.toList());
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

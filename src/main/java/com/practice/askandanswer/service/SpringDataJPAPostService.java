@@ -24,7 +24,7 @@ public class SpringDataJPAPostService implements PostService{
     }
 
     @Override
-    public Post getById(Integer id) {
+    public Post getById(Long id) {
         return postRepository.findById(id).get();
     }
 
@@ -34,7 +34,7 @@ public class SpringDataJPAPostService implements PostService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         postRepository.deleteById(id);
     }
 }

@@ -14,12 +14,36 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.5.3'
+    annotationProcessor group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.5.3'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.3'
+    implementation group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '5.0.2'
+    implementation group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
+    implementation group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '5.0.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.2'
+
+    //lombok dependency
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    //jwt dependencies
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2',
+            // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
+            //'org.bouncycastle:bcprov-jdk15on:1.60',
+            'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+
+    //-----//
+    //mysql tomcat
     runtimeOnly 'mysql:mysql-connector-java'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
